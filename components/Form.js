@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { StyledButton } from "./StyledButton.js";
-
+import { useRouter } from "next/router.js";
 const FormContainer = styled.form`
   display: grid;
   gap: 0.5rem;
@@ -25,11 +25,12 @@ const Label = styled.label`
 `;
 
 export default function Form({ onSubmit, formName, defaultData }) {
+  const router = useRouter();
   function handleSubmit(event) {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-    onSubmit(data);
+    // const formData = new FormData(event.target);
+    // const data = Object.fromEntries(formData);
+    onSubmit(event);
   }
 
   return (
@@ -70,7 +71,7 @@ export default function Form({ onSubmit, formName, defaultData }) {
         rows="10"
         defaultValue={defaultData?.description}
       ></Textarea>
-      <StyledButton type="submit">
+      <StyledButton type="submit" onClick={() => router.push("/")}>
         {defaultData ? "Update place" : "Add place"}
       </StyledButton>
     </FormContainer>
